@@ -16,12 +16,12 @@ uglify: {
     }
 },
 
-jshint:{
-    build:['Gruntfile.js','src/*.js'],
-    options:{
-        jshintrc:'.jshintrc'
-    }
-},
+// jshint:{
+//     build:['Gruntfile.js','src/*.js'],
+//     options:{
+//         jshintrc:'.jshintrc'
+//     }
+// },
 
 watch: {
     build: {
@@ -37,10 +37,10 @@ watch: {
   
   // 加载包含 "uglify" 任务的插件。
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  // grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // 默认被执行的任务列表。
-  grunt.registerTask('default', ['jshint','uglify','watch']);
+  grunt.registerTask('default', ['uglify','watch']);//'jshint',
 
 };
