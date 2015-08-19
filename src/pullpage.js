@@ -11,6 +11,7 @@
 		 * 滚动标识
 		 */
 		isScroll: false,
+		iskeyUp:false,
 		/**
 		 * 计时器
 		 */
@@ -20,6 +21,7 @@
 		 * 浏览器大小改变时候
 		 */
 		onSize:function(){
+
 
 			$(".slider").each(function(i, elem) {
 				$(this).css({
@@ -43,10 +45,11 @@
 		init: function(e) {
 			var self = this;
 			var _h = window.screen.height;
-			console.log(_h);
-			var slider = self.slider,
-				total = slider.length;
+			var slider = self.slider;
 			slider.css({
+				height: _h + "px"
+			});
+			$('body').css({
 				height: _h + "px"
 			});
 			/**
@@ -74,21 +77,24 @@
 				}
 			});
 
-			// $(document).bind('keydown',function (e) {
-			// 	if (e.keyCode == 38) {
-			// 		--self.iCount;
-			// 	}else if(e.keyCode == 40){
-			// 		++self.iCount;
-			// 	}
-			// 	var _top = self._sliderHight(self.iCount);
-			// 	self._sliderMethod(slider, {
-			// 		width: -_top
-			// 	});
-			// 	$(document).scrollTop(_top);
-			// 	setTimeout(function() {
-			// 		self.isScroll = false;
-			// 	}, 700);
-			// });
+			$(document).bind('keydown', function(e) {
+				if (!self.isScroll) {
+					self.isScroll = true;
+					if (e.keyCode == 38) {
+						--self.iCount;
+					} else if (e.keyCode == 40) {
+						++self.iCount;
+					}
+					var _top = self._sliderHight(self.iCount);
+					self._sliderMethod(slider, {
+						width: -_top
+					});
+					setTimeout(function() {
+						self.isScroll = false;
+					}, 800);
+				}
+
+			});
 
 			$(window).resize(function() {
 			  	self.onSize();
