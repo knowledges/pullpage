@@ -17,11 +17,33 @@
 		timer:null,
 		slider: $(".slider"),
 		/**
+		 * 浏览器大小改变时候
+		 */
+		onSize:function(){
+
+			$(".slider").each(function(i, elem) {
+				$(this).css({
+					height: $(window).height()
+				});
+			});
+
+			var scroll_top = 0;
+
+			if (this.iCount>=4) {
+				scroll_top = $(window).height()*(this.iCount-3);
+			}
+
+			//重新设置margin-top
+			$("html,body").scrollTop(scroll_top);
+			
+		},
+		/**
 		 * 初始化
 		 */
 		init: function(e) {
 			var self = this;
 			var _h = window.screen.height;
+			console.log(_h);
 			var slider = self.slider,
 				total = slider.length;
 			slider.css({
@@ -46,11 +68,30 @@
 					self._sliderMethod(slider, {
 						width: -_top
 					});
-					console.log(self.iCount);
 					setTimeout(function() {
 						self.isScroll = false;
 					}, 700);
 				}
+			});
+
+			// $(document).bind('keydown',function (e) {
+			// 	if (e.keyCode == 38) {
+			// 		--self.iCount;
+			// 	}else if(e.keyCode == 40){
+			// 		++self.iCount;
+			// 	}
+			// 	var _top = self._sliderHight(self.iCount);
+			// 	self._sliderMethod(slider, {
+			// 		width: -_top
+			// 	});
+			// 	$(document).scrollTop(_top);
+			// 	setTimeout(function() {
+			// 		self.isScroll = false;
+			// 	}, 700);
+			// });
+
+			$(window).resize(function() {
+			  	self.onSize();
 			});
 		},
 		/**
@@ -66,7 +107,7 @@
 			self.timer = setInterval(function() {
 				for (var prop in that) {
 
-					var s_top = obj.css('top') != "auto" ? parseInt(obj.css('top')) : 0;
+					var s_top = obj.css('top') != "auto" ? parseInt(parseInt(obj.css('top'))) : 0;
 
 					var speed = (that[prop] - s_top) / 8;
 					speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
